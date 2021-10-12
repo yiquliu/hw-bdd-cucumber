@@ -90,6 +90,18 @@ When /^(?:|I )check "([^"]*)"$/ do |field|
   check(field)
 end
 
+When /^(?:|I )check the following ratings: ([^"]*)$/ do |ratings|
+    ratings.split(',').each do |rating|
+       check("ratings_#{rating.squish!}")
+    end
+end
+
+When /^(?:|I )uncheck the following ratings: ([^"]*)$/ do |ratings|
+    ratings.split(',').each do |rating|
+       uncheck("ratings_#{rating.squish!}")
+    end
+end
+
 When /^(?:|I )uncheck "([^"]*)"$/ do |field|
   uncheck(field)
 end
@@ -251,4 +263,8 @@ end
 
 Then /^show me the page$/ do
   save_and_open_page
+end
+
+Then /^(?:|I )should see all of the movies/ do
+  page.all('table#movies tbody tr').count.should == 10
 end
